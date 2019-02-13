@@ -2,13 +2,13 @@
 lock '3.4.0'
 
 set :application, 'ror-blog'
-set :repo_url, 'git@github.com:zackthoutt/ror-blog.git'
+set :repo_url, 'git@gitlab.com:tty8747/ror-blog.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/home/zack/ror-blog'
+set :deploy_to, '/srv/ror-blog'
 set :deploy_via, :copy
 set :keep_releases, 5
 
@@ -18,7 +18,7 @@ set :rbenv_ruby, '2.2.3'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
-set :rbenv_path, '/home/zack/.rbenv'
+set :rbenv_path, '/home/deploy/.rbenv'
 set :bundle_env_variables, { 'NOKOGIRI_USE_SYSTEM_LIBRARIES' => 1 }
 
 # Default value for :scm is :git
