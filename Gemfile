@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-
+gem 'net-ssh', '< 4.0.0'
+gem 'nokogiri', '< 1.6.6.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 # Use sqlite3 as the database for Active Record
@@ -33,7 +34,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'acts-as-taggable-on', '~> 3.4'
 
 #seed database with faker
-gem 'faker'
+# gem 'faker'
+gem 'faker', '~> 1.4', '< 1.4.3'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
