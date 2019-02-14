@@ -7,7 +7,7 @@ listen 8082, :tcp_nopush => true
 
 timeout 30
 
-pid "/srv/ror-blog/current/tmp/pids/unicorn.pid"
+pid "/srv/ror-blog/current/pids/unicorn.pid"
 
 stderr_path "/srv/ror-blog/log/unicorn.stderr.log"
 stdout_path "/srv/ror-blog/log/unicorn.stdout.log"
