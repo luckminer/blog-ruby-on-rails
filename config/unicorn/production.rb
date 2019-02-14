@@ -3,7 +3,7 @@ worker_processes 2
 working_directory "/srv/ror-blog/current"
 
 listen "/srv/ror-blog/socket/.unicorn.sock", :backlog => 64
-listen 8080, :tcp_nopush => true
+listen 8082, :tcp_nopush => true
 
 timeout 30
 
