@@ -35,7 +35,8 @@ set :pty, true
 
 # Default value for :linked_files is []
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
-set :linked_files, fetch(:linked_files, []).push('config/unicorn/production.rb', 'config/secrets.yml')
+# set :linked_files, fetch(:linked_files, []).push('config/unicorn/production.rb', 'config/secrets.yml')
+set :linked_files, fetch(:linked_files, []).push('config/secrets.yml')
 
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
@@ -56,61 +57,6 @@ namespace :deploy do
 	  within release_path do
 	    execute :rake, 'cache:clear'
 	  end
-    end
-  end
-
-end
-
-namespace :deploy do
-
-  desc 'Restart application'
-  task :restart do
-    invoke 'unicorn:restart'
-  end
-end
-
-namespace :unicorn do
-  pid_path = "#{release_path}/tmp/pids"
-  unicorn_pid = "#{pid_path}/unicorn.pid"
-
-  def run_unicorn
-    execute "#{fetch(:bundle_binstubs)}/unicorn", "-c #{release_path}/config/unicorn.rb -D -E #{fetch(:stage)}"
-  end
-
-  desc 'Start unicorn'
-  task :start do
-    on roles(:app) do
-      run_unicorn
-    end
-  end
-
-  desc 'Stop unicorn'
-  task :stop do
-    on roles(:app) do
-      if test "[ -f #{unicorn_pid} ]"
-        execute :kill, "-QUIT `cat #{unicorn_pid}`"
-      end
-    end
-  end
-
-  desc 'Force stop unicorn (kill -9)'
-  task :force_stop do
-    on roles(:app) do
-      if test "[ -f #{unicorn_pid} ]"
-        execute :kill, "-9 `cat #{unicorn_pid}`"
-        execute :rm, unicorn_pid
-      end
-    end
-  end
-
-  desc 'Restart unicorn'
-  task :restart do
-    on roles(:app) do
-      if test "[ -f #{unicorn_pid} ]"
-        execute :kill, "-USR2 `cat #{unicorn_pid}`"
-      else
-        run_unicorn
-      end
     end
   end
 end
