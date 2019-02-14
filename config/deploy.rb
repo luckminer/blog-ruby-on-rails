@@ -36,7 +36,7 @@ set :pty, true
 # Default value for :linked_files is []
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
 # set :linked_files, fetch(:linked_files, []).push('config/unicorn/production.rb', 'config/secrets.yml')
-set :linked_files, fetch(:linked_files, []).push('config/tmp/pid/unicorn.pid', 'config/secrets.yml')
+set :linked_files, fetch(:linked_files, []).push('config/secrets.yml')
 
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
@@ -52,6 +52,52 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 namespace :deploy do
   after :finishing, 'deploy:cleanup', "deploy:update_code"
 
+namespace :unicorn do
+    pid_path = "#{release_path}/tmp/pids"
+    unicorn_pid = "#{pid_path}/unicorn.pid"
+
+    def run_unicorn
+      execute "cd #{current_path} ; bundle exec unicorn_rails -E #{fetch(:rails_env)}"
+    end
+
+    desc 'Start unicorn'
+    task :start do
+      on roles(:app) do
+        run_unicorn
+      end
+    end
+
+    desc 'Stop unicorn'
+    task :stop do
+      on roles(:app) do
+        if test "[ -f #{unicorn_pid} ]"
+          execute :kill, "-QUIT `cat #{unicorn_pid}`"
+        end
+      end
+    end
+
+    desc 'Force stop unicorn (kill -9)'
+    task :force_stop do
+      on roles(:app) do
+        if test "[ -f #{unicorn_pid} ]"
+          execute :kill, "-9 `cat #{unicorn_pid}`"
+          execute :rm, unicorn_pid
+        end
+      end
+    end
+
+    desc 'Restart unicorn'
+    task :restart do
+      on roles(:app) do
+        if test "[ -f #{unicorn_pid} ]"
+          execute :kill, "-USR2 `cat #{unicorn_pid}`"
+        else
+          run_unicorn
+        end
+      end
+    end
+  end
+
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
@@ -60,4 +106,6 @@ namespace :deploy do
 	  end
         end
       end
-end
+  end
+
+
