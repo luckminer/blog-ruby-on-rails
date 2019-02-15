@@ -21,6 +21,8 @@ set :rbenv_roles, :all # default value
 set :rbenv_path, '/home/deploy/.rbenv'
 set :bundle_env_variables, { 'NOKOGIRI_USE_SYSTEM_LIBRARIES' => 1 }
 
+set :unicorn_pid, '/srv/ror-blog/shared/pids/unicorn.pid'
+
 # Default value for :scm is :git
 # set :scm, :git
 
@@ -41,6 +43,7 @@ set :linked_files, fetch(:linked_files, []).push('config/secrets.yml')
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 # set :linked_dirs, fetch(:linked_dirs, []).push('bundle', 'config', 'public', 'run', 'tmp', 'pids', 'sockets', 'vendor')
+set :linked_dirs, fetch(:linked_dirs, []).push('pids')
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
