@@ -51,10 +51,16 @@ set :linked_dirs, fetch(:linked_dirs, []).push('pids')
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-
 namespace :deploy do
+
+  after 'symlink:release', 'deploy:migrate', 'unicorn:restart'
+
   after :finishing, 'deploy:cleanup', "deploy:update_code"
 
+# after ':symlink:release' do
+   #execute unicorn:restart
+# end
+ 
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
@@ -63,6 +69,4 @@ namespace :deploy do
 	  end
         end
       end
-  end
-
-
+end
