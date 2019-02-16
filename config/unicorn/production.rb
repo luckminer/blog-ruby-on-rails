@@ -8,8 +8,8 @@ old_pid    = pid_file + '.oldbin'
 
 timeout 30
 worker_processes 4
-# listen socket_file, :backlog => 1024
-listen "0.0.0.0:8082", :backlog => 1024
+listen socket_file, :backlog => 1024
+# listen "0.0.0.0:8082", :backlog => 1024
 pid pid_file
 stderr_path err_log
 stdout_path log_file
