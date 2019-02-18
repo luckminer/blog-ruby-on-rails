@@ -20,7 +20,7 @@ build:
 #   - apt-get install -y nodejs
     - gem install bundler -v 1.3.0
     - bundle install
-    - rbenv rehash
+#   - rbenv rehash
 #   - gem install capistrano
 #   - gem install rails
 #   - cap install
