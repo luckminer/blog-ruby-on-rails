@@ -20,7 +20,7 @@ build:
 #   - apt-get install -y nodejs
     - "which ssh-agent || ( apt-get update -y && apt-get install -y openssh-client )"
     - eval $(ssh-agent -s)
-    - echo "$SSH_TOKEN" | tr -d '\r' | ssh-add - > /dev/null
+    - echo "$id_rsa" | tr -d '\r' | ssh-add - > /dev/null
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - git clone git@gitlab.com:tty8747/ror-blog.git
