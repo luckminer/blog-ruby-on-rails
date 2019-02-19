@@ -1,0 +1,65 @@
+---
+- name: 'Clone repo rbenv'
+  git: 
+    repo: 'git://github.com/sstephenson/rbenv.git'
+    dest: '{{ rbenv_root }}'
+
+- name: 'Clone repo ruby'
+  git: 
+    repo: 'https://github.com/rbenv/ruby-build.git'
+    dest: '{{ rbenv_root }}/plugins/ruby-build'
+
+- name: 'Create .bash_profile'
+  template:
+    src: 'templates/bash_profile.j2'
+    dest: '{{ home }}/.bash_profile'
+
+- name: 'Create .gemrc'
+  template:
+    src: 'templates/gemrc.j2'
+    dest: '{{ home }}/.gemrc'
+
+- name: 'Change permissions .bash_profile'
+  file:
+    path: '{{ home }}/.bash_profile'
+    owner: '{{ user }}'
+    group: '{{ user }}'
+    mode: 0644
+
+- name: 'Change permissions .gemrc'
+  file:
+    path: '{{ home }}/.gemrc'
+    owner: '{{ user }}'
+    group: '{{ user }}'
+    mode: 0644
+
+- name: 'Check ruby {{ ruby_version }} installed'
+  shell: 'RBENV_ROOT={{ rbenv_root }} PATH="$RBENV_ROOT/bin:$PATH" rbenv versions | grep {{ ruby_version }}'
+  register: 'ruby_installed'
+  ignore_errors: yes
+
+- name: 'Install ruby {{ ruby_version }}'
+  shell: 'RBENV_ROOT={{ rbenv_root }} PATH="$RBENV_ROOT/bin:$PATH" rbenv install {{ ruby_version }}'
+  when: 'ruby_installed is failed'
+
+- name: 'rbenv | set global ruby {{ ruby_version }}'
+  shell: 'RBENV_ROOT={{ rbenv_root }} PATH="$RBENV_ROOT/bin:$PATH" rbenv global {{ ruby_version }}'
+  when: 'ruby_installed is failed'
+
+- name: 'Change permissions {{ rbenv_root }}'
+  file:
+    recurse: yes
+    state: directory 
+    path: '{{ rbenv_root }}'
+    owner: '{{ user }}'
+    group: '{{ user }}'
+
+# name: 'Install Bundler and Rails'
+# gem: 
+#   name: '{{ gems }}'
+#   state: 'present'
+#  #user_install: no
+# vars:
+#   gems:
+#   - bundler
+#   - rails

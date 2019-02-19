@@ -1,0 +1,8 @@
+---
+ruby_version: '2.2.3'
+user: 'deploy'
+home: '/home/{{ user }}'
+rbenv_root: '{{ home }}/.rbenv'
+app_name: 'ror-blog'
+application: '{{ home }}/{{ app_name }}'
+

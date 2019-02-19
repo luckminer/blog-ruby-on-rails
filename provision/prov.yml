@@ -1,0 +1,33 @@
+---
+- hosts: 'ror'
+  remote_user: 'goto'
+# remote_user: 'jenkins'
+  gather_facts: no
+  become: yes
+  become_user: root
+  become_method: sudo
+
+
+  pre_tasks:
+  - name: 'apt update & Installing python & Default python'
+    raw: test -x /usr/bin/python || apt-get update && apt-get -y install python2.7-minimal && update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
+
+
+  vars:
+    letsencrypts_email: tty8747@gmail.com
+    ruby_version: '2.3.0'
+    user: 'jenkins'
+    home: '/home/{{ user }}'
+    rbenv_root: '{{ home }}/.rbenv'
+    app_name: 'ror-blog'
+    application: '{{ home }}/{{ app_name }}'
+
+  roles:
+
+    - apt # Install packages
+    - account # Create deploy account
+    - localegen # Gen locale En
+    - rbenv # Install ruby
+#   - db # manage db
+#   - nginx
+#   - letsencrypt

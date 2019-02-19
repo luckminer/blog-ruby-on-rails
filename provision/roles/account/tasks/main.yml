@@ -1,0 +1,11 @@
+- name: Adding user "{{ user }}"
+  user:
+    name: "{{ user }}"
+#   groups: sudo
+    shell: /bin/bash
+
+- name: Add ssh keys to remote host
+  authorized_key:
+    user: "{{ user }}"
+    state: present
+    key: "{{ lookup('file', 'templates/id_rsa.pub') }}"
