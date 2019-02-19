@@ -1,12 +1,12 @@
 image: ubuntu:latest
 
 stages:
-  - prov
+  - provision
   - build
 # - delivery
 # - deploy
 
-prov:
+provision:
   image: williamyeh/ansible:ubuntu16.04
   
   stage: prov
