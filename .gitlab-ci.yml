@@ -1,7 +1,7 @@
 image: ubuntu:latest
 
 stages:
-  - build
+# - build
 # - delivery
   - deploy
 
@@ -40,9 +40,9 @@ deploy:
      - echo "$SSH_TOKEN" | tr -d '\r' | ssh-add - > /dev/null
      - mkdir -p ~/.ssh
      - chmod 700 ~/.ssh
-     - ssh-keyscan tty8747.devops.srwx.net >> ~/.ssh/known_hosts
+     - ssh-keyscan ruby.aaaj.ru >> ~/.ssh/known_hosts
      - chmod 644 ~/.ssh/known_hosts
 
 
    script: 
-     - ssh tty8747.devops.srwx.net -l deploy "ls -al"
+     - ssh ruby.aaaj.ru -l deploy "ls -al"
