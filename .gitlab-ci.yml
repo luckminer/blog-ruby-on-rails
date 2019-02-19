@@ -9,7 +9,7 @@ stages:
 provision:
   image: williamyeh/ansible:ubuntu16.04
   
-  stage: prov
+  stage: provision
   script: ansible --version
 
 build:
