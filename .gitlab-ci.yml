@@ -22,7 +22,7 @@ build:
   script:
     - ruby -v 
     - rails -v
-    - bundle exec cap production deploy
+#   - bundle exec cap production deploy
 
 deploy:
    image: ubuntu:latest
