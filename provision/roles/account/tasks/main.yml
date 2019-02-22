@@ -1,7 +1,7 @@
 - name: Adding user "{{ user }}"
   user:
     name: "{{ user }}"
-#   groups: sudo
+    create_home: yes
     shell: /bin/bash
 
 - name: Add ssh keys to remote host

@@ -6,25 +6,6 @@
   become_user: root
   become_method: sudo
 
-
-  pre_tasks:
-
-  - name: "Check host name availability"
-    shell: "ssh-keygen -f known_hosts -F {{ item }}"
-    which_items:
-      - ruby2.aaaj.ru
-    register: ssh_known_host_results
-    ignore_errors: yes
-
-  - name: "Scan the public key"
-    shell: "ssh-keyscan -t rsa {{ item.item }} >> ~/.ssh/known_hosts"
-    with_items: "{{ ssh_known_host_results.results }}"
-    when: item.stdout == ""
-
-  - name: "apt update & Installing python & Default python"
-    raw: test -x /usr/bin/python || apt-get update && apt-get -y install python2.7-minimal && update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
-
-
   vars:
     letsencrypts_email: tty8747@gmail.com
     ruby_version: "2.2.3"
@@ -34,12 +15,31 @@
     app_name: "ror-blog"
     application: "{{ home }}/{{ app_name }}"
 
-  roles:
+  pre_tasks:
 
+#    - name: "Check host name availability"
+#      shell: "ssh-keygen -f known_hosts -F {{ item }}"
+#      with_items:
+#        - ruby2.aaaj.ru
+#      register: ssh_known_host_results
+#      ignore_errors: yes
+  
+#    - name: "Scan the public key"
+#      shell: "ssh-keyscan -t rsa {{ item.item }} >> ~/.ssh/known_hosts"
+#      with_items: "{{ ssh_known_host_results.results }}"
+#      when: item.stdout == ""
+  
+    - name: "apt update & Installing python & Default python"
+      raw: test -x /usr/bin/python || apt-get update && apt-get -y install python2.7-minimal && update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
+  
+  roles:
+ 
     - apt # Install packages
     - account # Create deploy account
     - localegen # Gen locale En
-    - rbenv # Install ruby
+    - rbenv
+      
+#   - "{ role: rbenv, become: yes, become_user: deploy, become_method: sudo }" # Install ruby
 #   - db # manage db
 #   - nginx
 #   - letsencrypt
