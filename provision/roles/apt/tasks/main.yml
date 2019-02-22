@@ -23,10 +23,10 @@
      - libxml2-dev
      - libxslt1-dev
      - libcurl4-openssl-dev
-     - python-software-properties
      - libffi-dev
      - postgresql
      - postgresql-contrib
      - libpq-dev
      - nginx
      - letsencrypt
+     - software-properties-common

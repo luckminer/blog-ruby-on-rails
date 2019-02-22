@@ -1,7 +1,6 @@
 ---
-- hosts: 'ror'
-  remote_user: 'goto'
-# remote_user: 'jenkins'
+- hosts: "ror"
+  remote_user: "goto"
   gather_facts: no
   become: yes
   become_user: root
@@ -9,18 +8,31 @@
 
 
   pre_tasks:
-  - name: 'apt update & Installing python & Default python'
+
+  - name: "Check host name availability"
+    shell: "ssh-keygen -f known_hosts -F {{ item }}"
+    which_items:
+      - ruby2.aaaj.ru
+    register: ssh_known_host_results
+    ignore_errors: yes
+
+  - name: "Scan the public key"
+    shell: "ssh-keyscan -t rsa {{ item.item }} >> ~/.ssh/known_hosts"
+    with_items: "{{ ssh_known_host_results.results }}"
+    when: item.stdout == ""
+
+  - name: "apt update & Installing python & Default python"
     raw: test -x /usr/bin/python || apt-get update && apt-get -y install python2.7-minimal && update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
 
 
   vars:
     letsencrypts_email: tty8747@gmail.com
-    ruby_version: '2.3.0'
-    user: 'jenkins'
-    home: '/home/{{ user }}'
-    rbenv_root: '{{ home }}/.rbenv'
-    app_name: 'ror-blog'
-    application: '{{ home }}/{{ app_name }}'
+    ruby_version: "2.2.3"
+    user: "deploy"
+    home: "/home/{{ user }}"
+    rbenv_root: "{{ home }}/.rbenv"
+    app_name: "ror-blog"
+    application: "{{ home }}/{{ app_name }}"
 
   roles:
 
