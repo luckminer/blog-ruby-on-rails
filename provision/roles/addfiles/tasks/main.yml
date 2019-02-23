@@ -1,0 +1,25 @@
+---
+- name: "Create folders for app"
+  file:
+    path: "{{ item }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: directory
+  with_items: 
+    - "/srv/{{ app_name }}"
+    - "/srv/{{ app_name }}/shared"
+    - "/srv/{{ app_name }}/shared/config"
+    - "/srv/{{ app_name }}/shared/pids"
+    - "/srv/{{ app_name }}/shared/public"
+
+- name: "Create secrets.yml"
+  template:
+    src: "templates/secrets.yml.j2"
+    dest: "/srv/{{ app_name }}/shared/config/secrets.yml"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+#
+#- name: "Create .gemrc"
+#  template:
+#    src: "templates/gemrc.j2"
+#    dest: "{{ home }}/.gemrc"

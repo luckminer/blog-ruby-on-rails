@@ -14,6 +14,7 @@
     rbenv_root: "{{ home }}/.rbenv"
     app_name: "ror-blog"
     application: "{{ home }}/{{ app_name }}"
+    site_name: "ruby2.aaaj.ru"
 
   pre_tasks:
 
@@ -35,11 +36,10 @@
   roles:
  
     - apt # Install packages
-    - account # Create deploy account
+    - account # Create {{ user }} account
     - localegen # Gen locale En
-    - rbenv
-      
-#   - "{ role: rbenv, become: yes, become_user: deploy, become_method: sudo }" # Install ruby
-#   - db # manage db
-#   - nginx
+    - rbenv # Install rbenv and ruby
+    - addfiles # Add files and directory
+    - nginx  
 #   - letsencrypt
+#   - db # manage db

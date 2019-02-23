@@ -1,0 +1,27 @@
+server {
+        listen 80;
+
+        server_name {{ site  }};
+
+        location / {
+                return 301 https://$server_name$request_uri;
+        }
+
+        location /.well-known/ {
+                root /opt/acme;
+        }
+}
+
+server {
+
+        listen 443 ssl;
+
+        server_name {{ site }};
+
+        ssl_certificate /etc/letsencrypt/live/{{ site }}/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/{{ site }}/privkey.pem;
+        ssl_dhparam /etc/ssl/certs/dhparam.pem;
+
+        location ~ /\.git/  {return 404;}
+
+}

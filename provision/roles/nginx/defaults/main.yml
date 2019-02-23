@@ -1,0 +1,3 @@
+---
+worker_connections: 768
+site_name: "ruby2.aaaj.ru"

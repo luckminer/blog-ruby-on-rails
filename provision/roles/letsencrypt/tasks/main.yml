@@ -1,0 +1,63 @@
+---
+  - name: Push config nginx
+    template:
+      src=templates/nginxTemplate.j2
+      dest=/etc/nginx/sites-available/{{ site }}
+      owner=root
+      group=www-data
+      mode=0644
+    notify: restart nginx
+
+  - name: сreate directory /opt/acme
+    file:
+      path=/opt/acme
+      mode=0755
+      owner=root
+      group=root
+      state=directory
+
+  - name: rm default
+    file:
+      path: /etc/nginx/sites-enabled/default
+      state: absent
+    notify: restart nginx
+
+  - name: create symlink
+    file: src=/etc/nginx/sites-available/{{ site }} dest=/etc/nginx/sites-enabled/{{ site }} state=link
+    notify: restart nginx
+
+  - name: force handlers
+    meta: flush_handlers
+
+  - name: Install letsencrypt
+    apt:
+      name=letsencrypt
+      state=latest
+
+  - name: Create letsencrypt certificate
+    shell: letsencrypt certonly -n --webroot -w /opt/acme/ -d {{ site }} -m {{ letsencrypts_email }} --agree-tos
+    args:
+      creates: /etc/letsencrypt/live/{{ site }}/fullchain.pem
+
+  - name: Gen dhparam
+    shell: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+    args:
+      creates: /etc/ssl/certs/dhparam.pem
+    notify: restart nginx
+
+  - name: Push config nginx
+    template:
+      src=templates/nginxSslTemplate.j2
+      dest=/etc/nginx/sites-available/{{ site }}
+      owner=root
+      group=www-data
+      mode=0644
+    notify: restart nginx
+
+  - name: letsencrypt autoupdate
+    cron:
+      name: get cert
+      minute: "0"
+      hour: "4"
+      weekday: "1"
+      job: "letsencrypt renew && service nginx reload"
