@@ -1,26 +1,26 @@
 image: ubuntu:latest
 
 stages:
-  - provision
+# - provision
 # - build
 # - delivery
-# - deploy
+  - deploy
 
-provision:
-  image: williamyeh/ansible:ubuntu16.04
-  
-  stage: provision
-
-  before_script :
-    - "which ssh-agent || ( apt-get update -y && apt-get install -y openssh-client )"
-    - eval $(ssh-agent -s)
-    - echo "$SSH_TOKEN_RUBY" | tr -d '\r' | ssh-add - > /dev/null
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - ssh-keyscan ruby.aaaj.ru >> ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts
-
-  script: ansible-playbook -i provision/inventory/prod provision/prov.yml
+#provision:
+#  image: williamyeh/ansible:ubuntu16.04
+#  
+#  stage: provision
+#
+#  before_script :
+#    - "which ssh-agent || ( apt-get update -y && apt-get install -y openssh-client )"
+#    - eval $(ssh-agent -s)
+#    - echo "$SSH_TOKEN_RUBY" | tr -d '\r' | ssh-add - > /dev/null
+#    - mkdir -p ~/.ssh
+#    - chmod 700 ~/.ssh
+#    - ssh-keyscan ruby.aaaj.ru >> ~/.ssh/known_hosts
+#    - chmod 644 ~/.ssh/known_hosts
+#
+#  script: ansible-playbook -i provision/inventory/prod provision/prov.yml
 
 #build:
 #  image: ruby:2.2.3
@@ -40,19 +40,19 @@ provision:
 #    - bundle install
 #    - bundle exec cap production deploy
 
-#deploy:
-#   image: ubuntu:latest
-#   stage: deploy
-#   before_script :
-#    - "which ssh-agent || ( apt-get update -y && apt-get install -y openssh-client )"
-#    - eval $(ssh-agent -s)
-#    - echo "$SSH_TOKEN" | tr -d '\r' | ssh-add - > /dev/null
-#    - mkdir -p ~/.ssh
-#    - chmod 700 ~/.ssh
-#    - ssh-keyscan ruby.aaaj.ru >> ~/.ssh/known_hosts
-#    - chmod 644 ~/.ssh/known_hosts
-#
-#
-#   script: 
-#    - ssh ruby.aaaj.ru -l deploy "ls -al"
-#    - bundle exec cap production deploy
+deploy:
+   image: ubuntu:latest
+   stage: deploy
+   before_script :
+    - "which ssh-agent || ( apt-get update -y && apt-get install -y openssh-client )"
+    - eval $(ssh-agent -s)
+    - echo "$SSH_TOKEN" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan ruby.aaaj.ru >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+
+
+   script: 
+    - ssh ruby.aaaj.ru -l deploy "ls -al"
+    - bundle exec cap production deploy
