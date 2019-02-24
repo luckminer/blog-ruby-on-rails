@@ -25,7 +25,7 @@ provision:
   # ansible-playbook -i provision/inventory/prod provision/prov.yml
 
 build:
-  image: ruby:2.2.3-alpine
+  image: ruby:2.2.3
   stage: build
   before_script:
     - apt-get update -qy
