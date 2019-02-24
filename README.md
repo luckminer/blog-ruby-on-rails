@@ -1,7 +1,9 @@
+Use Ubuntu 16.04
+Add public key to gitlab
+Add private key to var SSH_TOKEN_RUBY2
+Put down public and private keys to ror-blog/provision/roles/account/templates/
 1. use provision/prov.yml
 2. use .gitlab-ci.yml
-3. use bundle exec cap production unicorn:start
-4. .gitlab-ci.yml
 
 
 

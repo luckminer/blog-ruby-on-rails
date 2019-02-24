@@ -1,11 +1,20 @@
+---
 - name: Adding user "{{ user }}"
   user:
     name: "{{ user }}"
-    create_home: yes
+    create_home: "yes"
     shell: /bin/bash
 
 - name: Add ssh keys to remote host
   authorized_key:
     user: "{{ user }}"
     state: present
-    key: "{{ lookup('file', 'templates/id_rsa.pub') }}"
+    key: "{{ lookup('file', 'templates/public.key') }}"
+
+ - name: "Push private key"
+   template:
+     src: "templates/private.key"
+     dest: "{{ home }}/.ssh"
+     owner: "{{ user }}"
+     group: "{{ user }}"
+     mode: 0600
