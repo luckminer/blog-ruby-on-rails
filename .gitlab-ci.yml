@@ -34,7 +34,7 @@ build:
     - echo "$SSH_TOKEN_RUBY2" | tr -d '\r' | ssh-add - > /dev/null
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan ruby.aaaj.ru >> ~/.ssh/known_hosts
+    - ssh-keyscan ruby2.aaaj.ru >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 
   script:
@@ -52,7 +52,7 @@ deploy:
     - echo "$SSH_TOKEN_RUBY2" | tr -d '\r' | ssh-add - > /dev/null
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan ruby.aaaj.ru >> ~/.ssh/known_hosts
+    - ssh-keyscan ruby2.aaaj.ru >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 
    script: 
