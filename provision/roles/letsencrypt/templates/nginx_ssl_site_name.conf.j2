@@ -21,7 +21,7 @@ server {
   listen 443 ssl;
 
   server_name {{ site_name }};
-  root /srv/{{ site_name}}/current/public;
+  root /srv/{{ app_name }}/current/public;
 
   ssl_certificate /etc/letsencrypt/live/{{ site_name }}/fullchain.pem;
   ssl_certificate_key /etc/letsencrypt/live/{{ site_name }}/privkey.pem;
