@@ -11,10 +11,10 @@
     state: present
     key: "{{ lookup('file', 'templates/public.key') }}"
 
- - name: "Push private key"
-   template:
-     src: "templates/private.key"
-     dest: "{{ home }}/.ssh"
-     owner: "{{ user }}"
-     group: "{{ user }}"
-     mode: 0600
+- name: "Push private key"
+  template:
+    src: "templates/private.key"
+    dest: "{{ home }}/.ssh"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0600
