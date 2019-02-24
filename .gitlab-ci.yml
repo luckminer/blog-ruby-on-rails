@@ -27,15 +27,15 @@ provision:
 build:
   image: ruby:2.2.3
   stage: build
-#  before_script:
-#    - apt-get update -qy
-#    - "which ssh-agent || ( apt-get install -y openssh-client )"
-#    - eval $(ssh-agent -s)
-#    - echo "$SSH_TOKEN_RUBY" | tr -d '\r' | ssh-add - > /dev/null
-#    - mkdir -p ~/.ssh
-#    - chmod 700 ~/.ssh
-#    - ssh-keyscan ruby.aaaj.ru >> ~/.ssh/known_hosts
-#    - chmod 644 ~/.ssh/known_hosts
+  before_script:
+    - apt-get update -qy
+    - "which ssh-agent || ( apt-get install -y openssh-client )"
+    - eval $(ssh-agent -s)
+    - echo "$SSH_TOKEN_RUBY2" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan ruby.aaaj.ru >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
 
   script:
     - gem install bundler -v 1.3.0
@@ -56,4 +56,4 @@ deploy:
     - chmod 644 ~/.ssh/known_hosts
 
    script: 
-    - ssh ruby2.aaaj.ru -l deploy "ls -al"
+    - ssh ruby2.aaaj.ru -l deploy "pwd; ls -al"
