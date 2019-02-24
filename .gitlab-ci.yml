@@ -55,4 +55,3 @@ deploy:
 
    script: 
     - ssh ruby.aaaj.ru -l deploy "ls -al"
-    - bundle exec cap production deploy
