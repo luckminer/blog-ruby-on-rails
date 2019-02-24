@@ -1,3 +1,10 @@
+1. use provision/prov.yml
+2. use .gitlab-ci.yml
+3. use bundle exec cap production unicorn:start
+4. .gitlab-ci.yml
+
+
+
 # What is this?
 This repo contains a sample blog built with Ruby on Rails. There are instructions below to get the app working in both development and production environments.
 
