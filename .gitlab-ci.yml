@@ -10,7 +10,7 @@ provision:
   image: williamyeh/ansible:ubuntu16.04
   
   stage: provision
-  script: ansible --version
+  script: ansible-playbook -i provision/inventory/prod provision/prov.yml
 
 #build:
 #  image: ruby:2.2.3
