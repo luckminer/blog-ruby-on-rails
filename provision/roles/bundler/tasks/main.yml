@@ -1,0 +1,12 @@
+---
+- name: "Clone repo rbenv"
+  git:
+    repo: "{{ repo_git }}"
+    dest: "{{ home }}/{{ app_name }}"
+
+- name: "Install gems"
+  bundler:
+    chdir: "{{ rbenv_root }}"
+    executable: "{{ rbenv_root }}/versions/{{ ruby_version  }}/bin/bundle"
+    gemfile: "{{ application }}/Gemfile"
+    state: "present"
