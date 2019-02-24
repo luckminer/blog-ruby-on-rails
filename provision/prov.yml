@@ -35,11 +35,11 @@
   
   roles:
  
-    - apt # Install packages
-    - account # Create {{ user }} account
-    - localegen # Gen locale En
-    - rbenv # Install rbenv and ruby
-    - addfiles # Add files and directory
-    - nginx  
-#   - letsencrypt
+#    - apt # Install packages
+#    - account # Create {{ user }} account
+#    - localegen # Gen locale En
+#    - rbenv # Install rbenv and ruby
+#    - addfiles # Add files and directory
+#    - nginx  
+    - letsencrypt
 #   - db # manage db
