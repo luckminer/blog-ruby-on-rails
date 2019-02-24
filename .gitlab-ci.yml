@@ -20,8 +20,7 @@ provision:
     - ssh-keyscan -t rsa ruby2.aaaj.ru >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 
-  script: ssh ruby2.aaaj.ru -l deploy "pwd"
-# script: ansible-playbook -i provision/inventory/prod provision/prov.yml
+  script: ansible-playbook -i provision/inventory/prod provision/prov.yml
 
 #build:
 #  image: ruby:2.2.3
