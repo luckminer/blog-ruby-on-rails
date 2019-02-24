@@ -1,6 +1,6 @@
 ---
 - hosts: "ror"
-  remote_user: "goto"
+  remote_user: "deploy" # "goto"
   gather_facts: no
   become: yes
   become_user: root
