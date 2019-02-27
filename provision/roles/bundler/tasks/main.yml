@@ -1,8 +1,21 @@
 ---
-- name: "Clone repo rbenv"
+- name: "bundler install"
+  become: "yes"
+  become_user: "{{ user }}"
+  gem:
+    name: bundler
+    version: "{{ bundler_ver }}"
+    executable: "{{ rbenv_root }}/versions/{{ ruby_version }}/bin/gem"
+    state: present
+    user_install: "no"
+
+- name: "Clone repo {{ repo_git }}"
+  become: "yes"
+  become_user: "{{ user }}"
   git:
     repo: "{{ repo_git }}"
     dest: "{{ home }}/{{ app_name }}"
+    key_file: "{{ home }}/.ssh/id_rsa"
 
 - name: "Install gems"
   bundler:

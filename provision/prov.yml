@@ -16,8 +16,7 @@
     application: "{{ home }}/{{ app_name }}"
     site_name: "ruby2.aaaj.ru"
     bundler_ver: "1.3.0"
-#   repo_git: "git@gitlab.com:tty8747/ror-blog.git"
-    repo_git: "https://gitlab.com/tty8747/ror-blog.git"
+    repo_git: "git@gitlab.com:tty8747/ror-blog.git"
 
   pre_tasks:
 
@@ -41,8 +40,6 @@
      - apt # Install packages
      - account # Create {{ user }} account
      - localegen # Gen locale En
-     - rbenv # Install rbenv and ruby
-     - bundler
      - addfiles # Add files and directory
      - nginx  
      - letsencrypt

@@ -53,7 +53,7 @@
 
 - name: 'ruby | install bundler'
   shell: 'RBENV_ROOT={{ rbenv_root }} PATH="$RBENV_ROOT/bin:$PATH" rbenv exec gem install bundler -v "{{ bundler_ver }}"'
-  when: 'ruby_installed|failed'
+  when: 'ruby_installed is failed'
 
 - name: "Change permissions {{ rbenv_root }}"
   file:

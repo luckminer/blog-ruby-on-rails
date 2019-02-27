@@ -14,7 +14,13 @@
 - name: "Push private key"
   template:
     src: "templates/private.key"
-    dest: "{{ home }}/.ssh"
+    dest: "{{ home }}/.ssh/id_rsa"
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: 0600
+
+- name: Add to ssh_known_host
+  known_hosts:
+    path: "{{ home }}/.ssh/known_hosts"
+    name: "{{ ruby2.aaaj.ru }}"
+    key: "{{ lookup('file', 'templates/public.key) }}"
